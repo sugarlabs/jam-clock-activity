@@ -19,7 +19,6 @@ class JAMDialog(pygame.sprite.OrderedUpdates):
 	def __init__(self, mensaje="JAMDialog", funcion_ok=None, funcion_cancel=None):
 		''' Es un grupo de sprite que contiene: JAMButton aceptar, JAMButton cancelar, Base.'''
 		pygame.sprite.OrderedUpdates.__init__(self)
-		self.resolucion= (800,600)
 		self.mensaje= mensaje
 		self.funcion_ok= None #funcion_ok
 		self.funcion_cancel= None #funcion_cancel
@@ -118,14 +117,11 @@ class JAMDialog(pygame.sprite.OrderedUpdates):
 
 	def set_center(self):
 		''' Centra la base y posiciona los botones. '''
-		'''
 		w,h= (800, 600)
 		try:
 			w,h= (pygame.display.Info().current_w, pygame.display.Info().current_h)
 		except:
-			w,h= (800, 600)'''
-		
-		w,h= self.resolucion
+			w,h= (800, 600)
 		self.base.rect.center= (w/2,h/2)
 		x= self.base.rect.x+self.separador
 		y= self.base.rect.y+self.base.rect.h-self.separador-self.boton_aceptar.rect.h

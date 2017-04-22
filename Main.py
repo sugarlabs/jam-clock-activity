@@ -24,8 +24,8 @@ from pygame.locals import *
 
 gc.enable()
 
-RESOLUCION = (1200, 900)
-SEPARADOR = 20
+RESOLUCION = (800, 600)
+SEPARADOR = 5
 ARCHIVO= os.path.join(os.environ["HOME"], "jamclockconfig.txt")
 
 import BiblioJAM
@@ -127,10 +127,11 @@ class Main():
 
 		if not self.dialog:
 			self.dialog= JAMDialog()
-			self.dialog.set_text(tamanio= 40)
+			self.dialog.set_text(tamanio= 24)
 			d,e,f= JAMG.get_estilo_celeste()
 			self.dialog.set_colors_dialog(base= e, bordes= f)
 			self.dialog.set_colors_buttons(colorbas= a, colorbor= b, colorcara= c)
+			self.dialog.set_text_buttons(tamanio=24)
 
 		if not pygame.mixer.get_init():
 			pygame.mixer.init(44100, -16, 2, 2048)
@@ -139,7 +140,7 @@ class Main():
 		if not self.controles: self.controles= pygame.sprite.OrderedUpdates()
 		if not self.cerrar:
 			self.cerrar= JAMButton("", JAMG.get_icon_exit())
-			self.cerrar.set_imagen(origen= JAMG.get_icon_exit())
+			self.cerrar.set_imagen(origen= JAMG.get_icon_exit(), tamanio=(20,20))
 			self.cerrar.set_tamanios(tamanio= (0,0), grosorbor= 1, espesor= 1)
 			self.cerrar.set_colores(colorbas= a, colorbor= b, colorcara= c)
 			x= RESOLUCION[0] - self.cerrar.get_tamanio()[0]
@@ -147,16 +148,16 @@ class Main():
 			self.cerrar.connect(callback= self.selecciona_mensaje_salir)
 		if not self.jamclock:
 			self.jamclock= JAMClock()
-			self.jamclock.set_tamanios(4)
+			self.jamclock.set_tamanios(2)
 			self.jamclock.set_colors_base(c, a)
 			y= self.cerrar.get_tamanio()[1] + SEPARADOR
 			self.jamclock.set_posicion(punto= (SEPARADOR, y))
 			self.sonidoalarma= JAMG.get_alarma_reloj1()
-			self.duracionalarma= 10
+			self.duracionalarma= 30
 		if not self.jamcalendar:
 			self.jamcalendar= JAMCalendar()
 			self.jamcalendar.set_gama_colors(colorselect= a, colorbor= b, colorcara= c)
-			self.jamcalendar.set_text(tamanio= 30)
+			self.jamcalendar.set_text(tamanio= 24)
 			x= RESOLUCION[0] - self.jamcalendar.get_tamanio()[0] - SEPARADOR
 			y= self.cerrar.get_tamanio()[1] + SEPARADOR
 			self.jamcalendar.set_posicion(punto= (x, y))
@@ -165,7 +166,7 @@ class Main():
 			x,y= self.jamcalendar.get_posicion()
 			w,h= self.jamcalendar.get_tamanio()
 			x= x + w/2 - self.controlalarma.get_tamanio()[0]/2
-			y += h + SEPARADOR
+			y += h + SEPARADOR*5
 			self.controlalarma.set_posicion(punto= (x, y))
 			self.controlalarma.boton_active.connect(callback= self.active_alarma)
 
@@ -250,7 +251,7 @@ class Main():
 		img= pygame.image.load("firma.png")
 		ww, hh= RESOLUCION
 		w,h= img.get_size()
-		x= ww- w - SEPARADOR
+		x= ww/2 - w/2
 		y= hh- h - SEPARADOR
 		superficie.blit(img, (x,y))
 		return superficie
@@ -265,9 +266,12 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
 		self.base= None
 		self.etiqueta= None
 		self.etiqueta_tiempo= None
-		self.boton_down= None
-		self.boton_up= None
+
 		self.boton_active= None
+		self.botonminutos_down= None
+		self.botonminutos_up= None
+		self.botonhoras_down= None
+		self.botonhoras_up= None
 
 		self.active= False
 		self.horas= 12
@@ -275,16 +279,19 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
 
 		self.load()
 
-		self.boton_up.connect(callback= self.next)
-		self.boton_down.connect(callback= self.back)
+		self.botonminutos_up.connect(callback= self.next)
+		self.botonminutos_down.connect(callback= self.back)
+
+		self.botonhoras_up.connect(callback= self.nexthoras)
+		self.botonhoras_down.connect(callback= self.backhoras)
 
 	def set_active(self, valor):
 		if valor:
 			self.active= True
-			self.boton_active.set_imagen(origen= JAMG.get_icon_cancel())
+			self.boton_active.set_imagen(origen= JAMG.get_icon_ok(), tamanio=(20,20))
 		elif not valor:
 			self.active= False
-			self.boton_active.set_imagen(origen= JAMG.get_icon_ok())
+			self.boton_active.set_imagen(origen= JAMG.get_icon_cancel(), tamanio=(20,20))
 
 	def next(self, button= None):
 		if self.minutos >= 59:
@@ -295,6 +302,7 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
 		if self.horas >= 24:
 			self.horas= 0
 		self.etiqueta_tiempo.set_text(texto= "%s:%s" % (self.horas, self.minutos))
+		self.set_active(False)
 
 	def back(self, button= None):
 		if self.minutos <= 1:
@@ -305,42 +313,69 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
 		if self.horas < 0:
 			self.horas= 23
 		self.etiqueta_tiempo.set_text(texto= "%s:%s" % (self.horas, self.minutos))
+		self.set_active(False)
+
+	def nexthoras(self, button= None):
+		if self.horas >= 23:
+			self.horas= 0
+		elif self.horas < 23:
+			self.horas+= 1
+		self.etiqueta_tiempo.set_text(texto= "%s:%s" % (self.horas, self.minutos))
+		self.set_active(False)
+
+	def backhoras(self, button= None):
+		if self.horas <= 23 and self.horas > 0:
+			self.horas-= 1
+		elif self.horas <= 0:
+			self.horas= 23
+		self.etiqueta_tiempo.set_text(texto= "%s:%s" % (self.horas, self.minutos))
+		self.set_active(False)
 
 	def load(self):
 		a,b,c= JAMG.get_estilo_papel_quemado()
 		self.etiqueta= Etiqueta("Alarma")
 		self.etiqueta.set_colores(colorbas= a, colorbor= b, colorcara= c)
 		self.etiqueta.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
-		self.etiqueta.set_text(tamanio= 40)
+		self.etiqueta.set_text(tamanio= 24)
 
 		self.etiqueta_tiempo= Etiqueta("%s:%s" % (self.horas, self.minutos))
 		self.etiqueta_tiempo.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
-		self.etiqueta_tiempo.set_text(tamanio= 50)
+		self.etiqueta_tiempo.set_text(tamanio= 40)
 
-		self.boton_down= JAMButton("", JAMG.get_icon_back())
-		self.boton_down.set_imagen(origen= JAMG.get_icon_back())
-		self.boton_down.set_colores(colorbas= a, colorbor= b, colorcara= c)
-		self.boton_down.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
+		self.botonminutos_down= JAMButton("", "down.png")
+		self.botonminutos_down.set_imagen(origen= "down.png", tamanio=(20,20))
+		self.botonminutos_down.set_colores(colorbas= a, colorbor= b, colorcara= c)
+		self.botonminutos_down.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
 
-		self.boton_up= JAMButton("", JAMG.get_icon_next())
-		self.boton_up.set_imagen(origen= JAMG.get_icon_next())
-		self.boton_up.set_colores(colorbas= a, colorbor= b, colorcara= c)
-		self.boton_up.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
+		self.botonminutos_up= JAMButton("", "up.png")
+		self.botonminutos_up.set_imagen(origen= "up.png", tamanio=(20,20))
+		self.botonminutos_up.set_colores(colorbas= a, colorbor= b, colorcara= c)
+		self.botonminutos_up.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
+
+		self.botonhoras_down= JAMButton("", "down.png")
+		self.botonhoras_down.set_imagen(origen= "down.png", tamanio=(20,20))
+		self.botonhoras_down.set_colores(colorbas= a, colorbor= b, colorcara= c)
+		self.botonhoras_down.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
+
+		self.botonhoras_up= JAMButton("", "up.png")
+		self.botonhoras_up.set_imagen(origen= "up.png", tamanio=(20,20))
+		self.botonhoras_up.set_colores(colorbas= a, colorbor= b, colorcara= c)
+		self.botonhoras_up.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
 
 		self.boton_active= JAMButton("", JAMG.get_icon_ok())
-		self.boton_active.set_imagen(origen= JAMG.get_icon_ok())
+		self.boton_active.set_imagen(origen= JAMG.get_icon_ok(), tamanio=(20,20))
 		self.boton_active.set_colores(colorbas= a, colorbor= b, colorcara= c)
 		self.boton_active.set_tamanios(tamanio= (0, 0), grosorbor= 1, espesor= 1)
 
 		self.base= self.get_base(color= b, tamanio= self.geometria())
 		w= self.get_tamanio()[0] - sep*2
 		self.etiqueta_tiempo.set_tamanios(tamanio= (w, 0), grosorbor= 1, espesor= 1)
-		self.add([self.base, self.etiqueta, self.etiqueta_tiempo, self.boton_down, self.boton_up, self.boton_active])
+		self.add([self.base, self.etiqueta, self.etiqueta_tiempo, self.botonminutos_up, self.botonminutos_down,
+			self.botonhoras_up, self.botonhoras_down, self.boton_active])
 		self.set_posicion(punto= (0,0))
 
 	def geometria(self):
-		ancho= sep*4 + self.boton_active.get_tamanio()[0] + self.boton_up.get_tamanio()[0] + self.boton_down.get_tamanio()[0]
-		alto= sep*4 + self.boton_active.get_tamanio()[1]*3
+		ancho, alto= (200,130)
 		return (ancho, alto)
 
 	def get_base(self, color=(100,100,100,1), tamanio= (100, 100)):
@@ -357,20 +392,39 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
 		x+= sep
 		y+= sep
 
+		# ---
 		xx= self.base.rect.x + self.base.rect.w/2 - self.etiqueta.get_tamanio()[0]/2
 		self.etiqueta.set_posicion(punto= (xx, y))
 
 		y+= self.etiqueta.get_tamanio()[1] + sep
 		xx= self.base.rect.x + self.base.rect.w/2 - self.etiqueta_tiempo.get_tamanio()[0]/2
 		self.etiqueta_tiempo.set_posicion(punto= (xx, y))	
+		# ---
 
-		y+= self.etiqueta_tiempo.get_tamanio()[1] + sep
-		self.boton_down.set_posicion(punto= (x, y))
+		x,y= self.etiqueta_tiempo.get_posicion()
+		xx,hh= self.botonminutos_up.get_tamanio()
+		x+= self.etiqueta_tiempo.get_tamanio()[0] - self.botonminutos_up.get_tamanio()[0]
+		y-= self.botonminutos_up.get_tamanio()[1] - self.etiqueta_tiempo.get_tamanio()[1]/2
+		self.botonminutos_up.set_posicion(punto= (x, y))
 
-		x+= sep + self.boton_down.get_tamanio()[0]
-		self.boton_up.set_posicion(punto= (x, y))
+		x,y= self.botonminutos_up.get_posicion()
+		y+= self.botonminutos_up.get_tamanio()[1]
+		self.botonminutos_down.set_posicion(punto= (x, y))
 
-		x+= sep + self.boton_up.get_tamanio()[0]
+		x,y= self.etiqueta_tiempo.get_posicion()
+		xx,hh= self.botonhoras_up.get_tamanio()
+		y-= self.botonhoras_up.get_tamanio()[1] - self.etiqueta_tiempo.get_tamanio()[1]/2
+		self.botonhoras_up.set_posicion(punto= (x, y))
+
+		x,y= self.botonhoras_up.get_posicion()
+		y+= self.botonhoras_up.get_tamanio()[1]
+		self.botonhoras_down.set_posicion(punto= (x, y))
+
+		x,y= self.etiqueta_tiempo.get_posicion()
+		w,h= self.etiqueta_tiempo.get_tamanio()
+		ww,yy= self.boton_active.get_tamanio()
+		x+= w/2 - ww/2
+		y+= sep + h
 		self.boton_active.set_posicion(punto= (x, y))
 
 	def get_tamanio(self):
