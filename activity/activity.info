@@ -1,0 +1,7 @@
+[Activity]
+name = JAMClock
+activity_version = 1
+service_name = org.laptop.JAMClock
+icon = JAMClock
+show_launcher = yes
+class = JAMClock.JAMClock
