@@ -18,8 +18,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-import pygame, gc, sys, os, threading, random, gtk, pygtk
+from gi.repository import Gtk
+import pygame, gc, sys, os, threading, rando, pygtk
 from pygame.locals import *
 
 gc.enable()
@@ -202,8 +202,8 @@ class Main():
 		pygame.display.update()
 		while self.estado:
 			self.reloj.tick(35)
-			while gtk.events_pending():
-			    	gtk.main_iteration(False)
+			while Gtk.events_pending():
+			    	Gtk.main_iteration(False)
 			Traduce_posiciones(self.VA, self.VH)
 			if self.mensaje:
 				self.pause_game()
@@ -225,8 +225,8 @@ class Main():
 	def pause_game(self):
 		while self.mensaje.sprites():
 			self.reloj.tick(35)
-			while gtk.events_pending():
-			    	gtk.main_iteration(False)
+			while Gtk.events_pending():
+			    	Gtk.main_iteration(False)
 			Traduce_posiciones(self.VA, self.VH)
 			self.controles.clear(self.ventana, self.fondo)
 			self.mensaje.clear(self.ventana, self.fondo)
