@@ -21,7 +21,6 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import GLib
-from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 import os, sys, socket, pygame
