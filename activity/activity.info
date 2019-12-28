@@ -1,7 +1,7 @@
 [Activity]
 name = JAMClock
 activity_version = 2
-bundle_id = org.sugarlabs.JAMClock
+bundle_id = org.laptop.JAMClock
 icon = JAMClock
 show_launcher = yes
-exec = sugar-activity3 JAMClock.JAMClock
+exec = JAMClock.JAMClock

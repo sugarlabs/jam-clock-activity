@@ -20,8 +20,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 import gi
 gi.require_version('Gtk', '3.0')
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
+from gi.repository import Gdk
 import os, sys, socket, pygame
 
 from pygame.locals import *
@@ -33,7 +35,7 @@ class JAMClock(activity.Activity):
 	def __init__(self, handle):
 	        activity.Activity.__init__(self, handle, False)
 		self.set_title('JAMClock')
-	        #self.set_toolbox(activity.ActivityToolbox(self))
+	        self.set_toolbar_box(activity.ActivityToolbox(self))
 		self.eventbox= PygameCanvas()
 		self.set_canvas(self.eventbox)
 
@@ -44,7 +46,7 @@ class JAMClock(activity.Activity):
 		self.realize()
 
 	       	os.putenv('SDL_WINDOWID', str(self.eventbox.socket.get_id()))
-		GObject.idle_add(self.get_run_game)
+		GLib.idle_add(self.get_run_game)
 
 	def get_run_game(self):
 		print "Lanzando JAMClock."
@@ -59,8 +61,8 @@ class JAMClock(activity.Activity):
 
 class PygameCanvas(Gtk.EventBox):
 	def __init__(self):
-		GObject.GObject.__init__(self)
-		self.set_flags(Gtk.CAN_FOCUS)
+		Gtk.EventBox.__init__(self)		
+		self.set_can_focus(True)
 		self.setup_events()
 		self.socket = Gtk.Socket()
 		self.add(self.socket)
@@ -68,7 +70,8 @@ class PygameCanvas(Gtk.EventBox):
         	self.mouse_pos = (0,0)
 		
 	def setup_events(self):
-		self.set_events(Gdk.KEY_PRESS | Gdk.EXPOSE | Gdk.EventMask.POINTER_MOTION_MASK | \
+
+		self.set_events(Gdk.EventType.KEY_PRESS | Gdk.EventType.EXPOSE | Gdk.EventMask.POINTER_MOTION_MASK | \
 		            Gdk.EventMask.POINTER_MOTION_HINT_MASK | Gdk.EventMask.BUTTON_MOTION_MASK | \
 		            Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK)
 	
@@ -149,14 +152,14 @@ class PygameCanvas(Gtk.EventBox):
 # -----------------------------------------------
 class VentanaGTK(Gtk.Window):
 	def __init__(self):
-		GObject.GObject.__init__(self, Gtk.WindowType.TOPLEVEL)
+		Gtk.Window.__init__(self, Gtk.WindowType.TOPLEVEL)
 		self.set_title("JAMClock")
 		#self.fullscreen()
 		self.set_size_request(800,600)
                 self.socket = Gtk.Socket()
                 self.add(self.socket)
 
-		self.gtkplug= gtkplug()
+		self.gtkplug = gtkplug()
 		self.socket.add_id(self.gtkplug.get_id())	
 		
 		self.add_events(Gdk.EventMask.ALL_EVENTS_MASK)
@@ -178,7 +181,7 @@ class VentanaGTK(Gtk.Window):
 
 class gtkplug(Gtk.Plug):
 	def __init__(self):
-		GObject.GObject.__init__(self, 0L)
+		Gtk.Plug.__init__(self, 0L)		
 		self.set_title("JAMClock")
 		self.eventbox= PygameCanvas()
 		self.add(self.eventbox)
@@ -188,7 +191,7 @@ class gtkplug(Gtk.Plug):
 		self.connect("embedded", self.embed_event)
 
 	       	os.putenv('SDL_WINDOWID', str(self.eventbox.socket.get_id()))
-		GObject.idle_add(self.get_run_game)
+		GLib.idle_add(self.get_run_game)
 
 	def get_run_game(self):
         	self.eventbox.socket.window.set_cursor(None)
