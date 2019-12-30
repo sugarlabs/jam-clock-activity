@@ -4,4 +4,4 @@ activity_version = 2
 bundle_id = org.laptop.JAMClock
 icon = JAMClock
 show_launcher = yes
-exec = JAMClock.JAMClock
+exec = sugar-activity JAMClock.JAMClock

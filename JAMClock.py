@@ -34,7 +34,7 @@ class JAMClock(activity.Activity):
 	def __init__(self, handle):
 	        activity.Activity.__init__(self, handle, False)
 		self.set_title('JAMClock')
-	        self.set_toolbar_box(activity.ActivityToolbox(self))
+	        #self.set_toolbar_box(activity.ActivityToolbox(self))
 		self.eventbox= PygameCanvas()
 		self.set_canvas(self.eventbox)
 
