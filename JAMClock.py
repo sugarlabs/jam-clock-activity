@@ -77,7 +77,7 @@ class PygameCanvas(Gtk.EventBox):
 		self.connect("key-press-event", self.keypress)
 		self.connect("button_press_event", self.mousedown)
 		self.connect("motion-notify-event", self.mousemotion)
-		self.connect('expose-event', self.expose)
+		self.connect('draw', self.expose)
 		self.connect('configure-event', self.resize)
 		self.connect("focus-in-event", self.set_focus)
 
