@@ -30,10 +30,8 @@ import pygame
 import gc
 import sys
 import os
-import threading
 import random
-import gtk
-import pygtk
+from gi.repository import Gtk
 from pygame.locals import *
 
 gc.enable()
@@ -85,6 +83,7 @@ def Traduce_posiciones(VA, VH):
 
 class Main():
     def __init__(self, res):
+        
         self.resolucionreal = res
         self.ventana = None
         self.name = "JAMClock"
@@ -107,14 +106,10 @@ class Main():
 
         self.mensaje = None
         self.dialog = None
-
-        self.preset()
-        self.load()
-        self.run()
+        
 
     def preset(self):
-        pygame.display.set_mode(
-            (0, 0), pygame.DOUBLEBUF | pygame.FULLSCREEN, 0)
+        pygame.display.set_mode((0, 0))
         A, B = RESOLUCION
         self.ventana = pygame.Surface((A, B), flags=HWSURFACE)
         self.ventana_real = pygame.display.get_surface()
@@ -220,13 +215,16 @@ class Main():
             Guardar("%s:%s" % (horas, minutos))
 
     def run(self):
+        pygame.init()
+        self.preset()
+        self.load()
         self.ventana.blit(self.fondo, (0, 0))
         self.controles.draw(self.ventana)
         pygame.display.update()
         while self.estado:
             self.reloj.tick(35)
-            while gtk.events_pending():
-                gtk.main_iteration(False)
+            while Gtk.events_pending():
+                Gtk.main_iteration()
             Traduce_posiciones(self.VA, self.VH)
             if self.mensaje:
                 self.pause_game()
@@ -249,8 +247,8 @@ class Main():
     def pause_game(self):
         while self.mensaje.sprites():
             self.reloj.tick(35)
-            while gtk.events_pending():
-                gtk.main_iteration(False)
+            while Gtk.events_pending():
+                Gtk.main_iteration()
             Traduce_posiciones(self.VA, self.VH)
             self.controles.clear(self.ventana, self.fondo)
             self.mensaje.clear(self.ventana, self.fondo)
@@ -324,7 +322,7 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
             self.boton_active.set_imagen(
                 origen=JAMG.get_icon_cancel(), tamanio=(20, 20))
 
-    def next(self, button=None):
+    def __next__(self, button=None):
         if self.minutos >= 59:
             self.minutos = 0
             self.horas += 1

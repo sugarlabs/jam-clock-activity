@@ -89,13 +89,14 @@ class JAMLabel(pygame.sprite.Sprite):
 			self.contenedor["base"]["color"] = None
 			colorbas=None
 			cambios= True
-		if colorbor == -1 or grosor < 1:
-		# Deshabilita borde
-			self.contenedor["borde"]["grosor"] = None
-			self.contenedor["borde"]["color"] = None
-			colorbor=None
-			grosor=None
-			cambios= True
+		if grosor:
+			if colorbor == -1 or grosor < 1:
+			# Deshabilita borde
+				self.contenedor["borde"]["grosor"] = None
+				self.contenedor["borde"]["color"] = None
+				colorbor=None
+				grosor=None
+				cambios= True
 		if colorbas and colorbas != self.contenedor["base"]["color"]:
 			self.contenedor["base"]["color"] = colorbas
 			cambios= True
@@ -143,10 +144,10 @@ class JAMLabel(pygame.sprite.Sprite):
 	def construye_texto(self):
 		''' Devuelve una Superficie con la Imagen del Texto. '''
 		string_to_render= ""
-		fuente = pygame.font.Font(pygame.font.match_font(self.texto["tipo"], True, False), self.texto["tamanio"])
+		fuente = pygame.font.Font(pygame.font.match_font(self.texto["tipo"], True, False), int(self.texto["tamanio"]))
 		if self.font_from_file:
 			fuente= pygame.font.Font(self.font_from_file, self.texto["tamanio"])
-		string_to_render = str( str(self.texto["texto"]).decode("utf-8") )
+		string_to_render = str(self.texto["texto"])
 		imagen_fuente = fuente.render(string_to_render, 1, (self.texto["color"]))
 		self.contenedor["base"]["tamanio"] = (imagen_fuente.get_size()[0]+self.separador*2, imagen_fuente.get_size()[1]+self.separador*2)
 		return imagen_fuente

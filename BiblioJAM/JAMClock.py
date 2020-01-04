@@ -7,7 +7,8 @@
 #   https://sites.google.com/site/sugaractivities/
 #   http://codigosdeejemplo.blogspot.com/
 
-import pygame, gc, sys, gobject, time, datetime, os
+import pygame, gc, sys, time, datetime, os
+from gi.repository import GObject
 from pygame.locals import *
 gc.enable()
 pygame.font.init()

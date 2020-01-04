@@ -135,7 +135,7 @@ def get_Rectangulo_Transparente(tamanio):
 	return superficie
 def get_my_surface_whit_border(superficie, color, grosor):
 	''' Pinta un Borde Rectangular sobre una superficie y devuelve el resultado. '''
-	pygame.draw.rect(superficie, color, superficie.get_rect(), grosor)
+	pygame.draw.rect(superficie, color, superficie.get_rect(), int(grosor))
 	return superficie
 def get_Elipse(color, tamanio):
 	''' Devuelve una Elipse según color y tamaño. '''
