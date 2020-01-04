@@ -11,7 +11,7 @@ import pygame, gc, sys, random
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
+from . import JAMGlobals as VG
 
 class JAMNubes(pygame.sprite.OrderedUpdates):
 	''' Un reloj hecho en pygame. '''
@@ -118,7 +118,7 @@ class JAMNubes(pygame.sprite.OrderedUpdates):
 			x= self.rectangulo[0]+self.rectangulo[2] - 1
 
 		# posiciona la nube a una altura al azar
-		y= random.choice(range(self.rectangulo[1]-int(h/3 *2), self.rectangulo[1]+self.rectangulo[3]-h))
+		y= random.choice(list(range(self.rectangulo[1]-int(h/3 *2), self.rectangulo[1]+self.rectangulo[3]-h)))
 
 		nube.set_posicion(punto= (x, y))
 		self.nubes.add(nube)

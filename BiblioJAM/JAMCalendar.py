@@ -12,9 +12,9 @@ from pygame.locals import *
 gc.enable()
 pygame.font.init()
 
-import JAMGlobals as VG
-from JAMButton import JAMButton
-from JAMLabel import JAMLabel
+from . import JAMGlobals as VG
+from .JAMButton import JAMButton
+from .JAMLabel import JAMLabel
 
 class JAMCalendar(pygame.sprite.OrderedUpdates):
 	''' Un Calendario hecho en pygame. '''
@@ -340,7 +340,7 @@ class JAMCalendar(pygame.sprite.OrderedUpdates):
 
 	def set_calendar(self, mes, anio):
 		''' Cuando se cambia el mes o año. '''
-		if not type(mes)== int or not type(anio)== int or mes not in range(1,13) or not anio > 0: return
+		if not type(mes)== int or not type(anio)== int or mes not in list(range(1,13)) or not anio > 0: return
 		self.mes, self.anio= (mes, anio)
 		datos_calendar= VG.get_calendar(int(self.mes), int(self.anio))
 		self.botones_fechas.set_mes(datos_calendar[2:])

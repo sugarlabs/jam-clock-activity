@@ -11,8 +11,8 @@ import pygame, gc, sys, time, os
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
-from JAMButton import JAMButton
+from . import JAMGlobals as VG
+from .JAMButton import JAMButton
 
 class JAMCron(pygame.sprite.OrderedUpdates):
 	''' Un Cronómetro. '''

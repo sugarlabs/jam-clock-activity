@@ -11,7 +11,7 @@ import pygame, gc, sys, os
 from pygame.locals import *
 gc.enable()
 pygame.font.init()
-import JAMGlobals as VG
+from . import JAMGlobals as VG
 
 class JAMLabel(pygame.sprite.Sprite):
 	def __init__(self, texto):
@@ -146,7 +146,7 @@ class JAMLabel(pygame.sprite.Sprite):
 		fuente = pygame.font.Font(pygame.font.match_font(self.texto["tipo"], True, False), self.texto["tamanio"])
 		if self.font_from_file:
 			fuente= pygame.font.Font(self.font_from_file, self.texto["tamanio"])
-		string_to_render = unicode( str(self.texto["texto"]).decode("utf-8") )
+		string_to_render = str( str(self.texto["texto"]).decode("utf-8") )
 		imagen_fuente = fuente.render(string_to_render, 1, (self.texto["color"]))
 		self.contenedor["base"]["tamanio"] = (imagen_fuente.get_size()[0]+self.separador*2, imagen_fuente.get_size()[1]+self.separador*2)
 		return imagen_fuente
@@ -232,11 +232,11 @@ class JAMLabel(pygame.sprite.Sprite):
 					Borde:
 						grosor
 						color '''
-		print estructura
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura)
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 # ----- FIN DE CLASE JAMLabel - INICIO DE DEBUG Y EJEMPLO DE LA CLASE -----
 class Ejemplo(object):
@@ -371,7 +371,7 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def salir(self):
-		print "\n"
+		print("\n")
 		self.widgets.sprites()[0].Describe()
 		pygame.quit()
 		sys.exit()

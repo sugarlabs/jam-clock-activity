@@ -12,10 +12,10 @@ from pygame.locals import *
 
 gc.enable()
 
-from JAMLabel import JAMLabel
-from JAMButton import JAMButton
+from .JAMLabel import JAMLabel
+from .JAMButton import JAMButton
 
-import JAMGlobals as VG
+from . import JAMGlobals as VG
 
 class JAMBook(pygame.sprite.OrderedUpdates):
 	''' Libreta para lectura con los botones de navegación y motor de voz. '''
@@ -83,7 +83,7 @@ class JAMBook(pygame.sprite.OrderedUpdates):
 		boton_salir.set_imagen(origen=cuatro , tamanio=(10,10))
 		boton_salir.set_tamanios(tamanio=(0,0),grosorbor=1, espesor=1)
 		boton_previous.connect(callback=self.texto_sprite.previous)
-		boton_next.connect(callback=self.texto_sprite.next)
+		boton_next.connect(callback=self.texto_sprite.__next__)
 		return [boton_previous, boton_next, boton_salir]
 
 class Rectangulo_Texto(pygame.rect.Rect):

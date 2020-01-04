@@ -11,9 +11,9 @@ import pygame, gc, sys
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
-from JAMLabel import JAMLabel
-from JAMButton import JAMButton
+from . import JAMGlobals as VG
+from .JAMLabel import JAMLabel
+from .JAMButton import JAMButton
 
 class JAMBoardTypes(pygame.sprite.OrderedUpdates):
 	def __init__(self, tipo="letras"):
@@ -277,11 +277,11 @@ class JAMBoardTypes(pygame.sprite.OrderedUpdates):
 				Text_Buffer donde se guarda el texto que se genera al presionar los botones.
 			'''
 
-		print estructura, "\n"
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura, "\n")
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 # ----- FIN DE CLASE JAMBoardTypes - INICIO DE DEBUG Y EJEMPLO DE LA CLASE -----
 class Ejemplo(object):
@@ -419,7 +419,7 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def salir(self):
-		print "\n"
+		print("\n")
 		self.widgets.Describe()
 		pygame.quit()
 		sys.exit()

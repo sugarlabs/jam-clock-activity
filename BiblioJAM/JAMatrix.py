@@ -15,11 +15,11 @@ gc.enable()
 
 import sys, os, random, threading
 
-from JAMLabel import JAMLabel
-from JAMClock import JAMClock
-from JAMCalendar import JAMCalendar
+from .JAMLabel import JAMLabel
+from .JAMClock import JAMClock
+from .JAMCalendar import JAMCalendar
 
-import JAMGlobals as VG
+from . import JAMGlobals as VG
 
 class JAMatrix():
 	''' Main de JAMatrix. '''

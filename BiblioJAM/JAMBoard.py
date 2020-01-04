@@ -11,8 +11,8 @@ import pygame, gc, sys
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
-from JAMBoardTypes import JAMBoardTypes
+from . import JAMGlobals as VG
+from .JAMBoardTypes import JAMBoardTypes
 
 class JAMBoard(pygame.sprite.OrderedUpdates):
 	def __init__(self):
@@ -328,37 +328,37 @@ class JAMBoard(pygame.sprite.OrderedUpdates):
 			if self.text_buffer == " ":
 				self.text_buffer = ""
 			self.text_buffer += boton.get_text()
-			print self.text_buffer
+			print(self.text_buffer)
 			return
 		elif boton in self.board_numeros.botones:
 			if self.text_buffer == " ":
 				self.text_buffer = ""
 			self.text_buffer += boton.get_text()
-			print self.text_buffer
+			print(self.text_buffer)
 			return
 		elif boton in self.board_simbolos.botones:
 			if self.text_buffer == " ":
 				self.text_buffer = ""
 			self.text_buffer += boton.get_text()
-			print self.text_buffer
+			print(self.text_buffer)
 			return
 		elif boton in self.board_otros.botones:
 			if self.text_buffer == " ":
 				self.text_buffer = ""
 			self.text_buffer += boton.get_text()
-			print self.text_buffer
+			print(self.text_buffer)
 			return
 		elif boton in self.board_matematicas.botones:
 			if self.text_buffer == " ":
 				self.text_buffer = ""
 			self.text_buffer += boton.get_text()
-			print self.text_buffer
+			print(self.text_buffer)
 			return
 		elif boton in self.board_especiales.botones:
 			if self.text_buffer == " ":
 				self.text_buffer = ""
 			self.text_buffer += boton.get_text()
-			print self.text_buffer
+			print(self.text_buffer)
 			return
 
 
@@ -377,11 +377,11 @@ class JAMBoard(pygame.sprite.OrderedUpdates):
 				JAMBoardTypes otros
 				JAMBoardTypes especiales'''
 
-		print estructura, "\n"
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura, "\n")
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 # ----- FIN DE CLASE JAMBoard - INICIO DE DEBUG Y EJEMPLO DE LA CLASE -----
 class Ejemplo(object):
@@ -530,7 +530,7 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def salir(self):
-		print "\n"
+		print("\n")
 		self.widgets.Describe()
 		pygame.quit()
 		sys.exit()

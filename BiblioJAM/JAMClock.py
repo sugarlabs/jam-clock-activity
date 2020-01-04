@@ -12,8 +12,8 @@ from pygame.locals import *
 gc.enable()
 pygame.font.init()
 
-import JAMGlobals as VG
-from JAMButton import JAMButton
+from . import JAMGlobals as VG
+from .JAMButton import JAMButton
 
 class JAMClock(pygame.sprite.OrderedUpdates):
 	''' Un reloj hecho en pygame. '''
@@ -76,10 +76,10 @@ class JAMClock(pygame.sprite.OrderedUpdates):
 				self.sonido_alarma.play(self.duracion_alarma)
 			except:
 				pass
-			print "ALARMA SONANDO !!!"
+			print("ALARMA SONANDO !!!")
 		elif h > self.alarma[0] or m > self.alarma[1] and self.alarma_activada:
 			self.alarma_activada= False
-			print "ALARMA DESACTIVADA - VOLVERÁ A SONAR EN 24 HORAS A MENOS QUE LA DESACTIVES !!!"
+			print("ALARMA DESACTIVADA - VOLVERÁ A SONAR EN 24 HORAS A MENOS QUE LA DESACTIVES !!!")
 
 	# ---------------- SETEOS -------------------
 	def set_alarma(self, tiempo, sound, duracion):

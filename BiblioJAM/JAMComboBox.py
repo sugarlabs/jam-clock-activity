@@ -12,8 +12,8 @@ from pygame.locals import *
 gc.enable()
 pygame.font.init()
 
-import JAMGlobals as VG
-from JAMButton import JAMButton
+from . import JAMGlobals as VG
+from .JAMButton import JAMButton
 
 class JAMComboBox(pygame.sprite.OrderedUpdates):
 	def __init__(self):

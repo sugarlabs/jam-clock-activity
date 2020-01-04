@@ -11,8 +11,8 @@ import pygame, gc, sys
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
-from JAMLabel import JAMLabel
+from . import JAMGlobals as VG
+from .JAMLabel import JAMLabel
 
 class JAMButton(pygame.sprite.Sprite):
 	def __init__(self, texto, imagen, tipo="rectangulo"):
@@ -403,11 +403,11 @@ class JAMButton(pygame.sprite.Sprite):
 				Base
 				Cara
 				Borde '''
-		print estructura
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura)
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 # ----- FIN DE CLASE JAMButton - INICIO DE DEBUG Y EJEMPLO DE LA CLASE -----
 class Ejemplo(object):
@@ -569,7 +569,7 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def salir(self, datos=None):
-		print "\n"
+		print("\n")
 		self.widgets.sprites()[0].Describe()
 		pygame.quit()
 		sys.exit()

@@ -11,7 +11,7 @@ import pygame, gc, sys, os
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
+from . import JAMGlobals as VG
 
 class JAMFire(pygame.sprite.OrderedUpdates):
 	''' Efecto Fuego. '''

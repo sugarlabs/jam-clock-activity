@@ -51,7 +51,7 @@ class JAMClock(activity.Activity):
         gobject.idle_add(self.get_run_game)
 
     def get_run_game(self):
-        print "Lanzando JAMClock."
+        print("Lanzando JAMClock.")
         pygame.init()
         x, y, w, y = self.eventbox.get_allocation()
         Main((w, y))
@@ -92,9 +92,9 @@ class PygameCanvas(gtk.EventBox):
         try:
             valor = getattr(pygame, "K_%s" % (str.upper(nombre)))
         except:
-            print "no has programado la traduccion de esta tecla: ", nombre
+            print("no has programado la traduccion de esta tecla: ", nombre)
             return False
-        evt = pygame.event.Event(tipo, key=valor, unicode=unic, mod=None)
+        evt = pygame.event.Event(tipo, key=valor, str=unic, mod=None)
         try:
             pygame.event.post(evt)
         except:
@@ -189,7 +189,7 @@ class VentanaGTK(gtk.Window):
 
 class gtkplug(gtk.Plug):
     def __init__(self):
-        gtk.Plug.__init__(self, 0L)
+        gtk.Plug.__init__(self, 0)
         self.set_title("JAMClock")
         self.eventbox = PygameCanvas()
         self.add(self.eventbox)
@@ -203,14 +203,14 @@ class gtkplug(gtk.Plug):
 
     def get_run_game(self):
         self.eventbox.socket.window.set_cursor(None)
-        print "Lanzando JAMClock."
+        print("Lanzando JAMClock.")
         pygame.init()
         x, y, w, y = self.eventbox.get_allocation()
         Main((w, y))
         return False
 
     def embed_event(self, widget):
-        print "Juego embebido"
+        print("Juego embebido")
 
 
 if __name__ == "__main__":

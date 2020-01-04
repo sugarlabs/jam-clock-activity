@@ -11,7 +11,7 @@ import pygame, gc, sys
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
+from . import JAMGlobals as VG
 
 class JAMDragAndDrop():
 	''' Recibe un grupo de Sprites y hace drag and drop con el grupo entero. '''
@@ -91,8 +91,8 @@ class Ejemplo(object):
 		pygame.display.set_caption("Ejemplo")
 		self.fondo = self.get_Fondo()
 
-		from JAMCalendar import JAMCalendar
-		from JAMClock import JAMClock
+		from .JAMCalendar import JAMCalendar
+		from .JAMClock import JAMClock
 		self.calendario= JAMCalendar() # Mi grupo de Sprites.
 		self.draganddrop= JAMDragAndDrop(self.calendario) # JAMDragAndDrop con el grupo que se va a arrastrar. 
 		self.draganddrop.connect_drop(self.reposiciona) # Callback para evento "soltar objetivo".
@@ -127,15 +127,15 @@ class Ejemplo(object):
 			pygame.display.update(cambios)
 			if self.contador > 0:
 				self.contador += 1
-				print "%s para reactivar JAMDragAndDrop sobre el Calendario" % (150 - self.contador)
+				print("%s para reactivar JAMDragAndDrop sobre el Calendario" % (150 - self.contador))
 			if self.contador== 150:
-				print "JAMDragAndDrop reactivado"
+				print("JAMDragAndDrop reactivado")
 				self.widgets= self.draganddrop  # Lo que se dibuja y actualiza es ahora JAMDragAndDrop
 				self.contador = 0
 
 	def imprime_hola(self, drag, group):
 		''' Callback para tomar objetivo. '''
-		print "Objeto seleccionado:", group, "en:", drag
+		print("Objeto seleccionado:", group, "en:", drag)
 	def reposiciona(self, drag, group):
 		''' Callback para soltar objetivo.
 		Cuando haces click sobre el grupo lo seleccionas y lo mueves, cuando vuelves a hacer click lo sueltas y

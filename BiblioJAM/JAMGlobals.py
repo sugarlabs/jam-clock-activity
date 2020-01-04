@@ -152,7 +152,7 @@ def get_my_surface_whit_elipse_border(superficie, color, grosor):
 		pygame.draw.ellipse(superficie, color, rectangulo, int(grosor))
 		return superficie
 	except:
-		print rectangulo, color, grosor
+		print(rectangulo, color, grosor)
 def pegar_imagenes_centradas(superficie1, superficie2):
 	''' Pega superficie1 sobre superficie2. '''
 	w,h= superficie2.get_size()

@@ -12,8 +12,8 @@ from pygame.locals import *
 gc.enable()
 pygame.font.init()
 
-import JAMGlobals as VG
-from JAMLabel import JAMLabel
+from . import JAMGlobals as VG
+from .JAMLabel import JAMLabel
 
 class JAMEntryText(pygame.sprite.OrderedUpdates):
 	def __init__(self):
@@ -166,11 +166,11 @@ class JAMEntryText(pygame.sprite.OrderedUpdates):
 				buffertext: El texto que el usuario va ingresando
 				handle_key: Detector de eventos de teclado '''
 
-		print estructura, "\n"
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura, "\n")
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 class Promp(pygame.sprite.Sprite):
 	def __init__(self, entry):
@@ -206,7 +206,7 @@ class Promp(pygame.sprite.Sprite):
 	def get_promp(self, color):
 		''' Devuelve una Superficie con la Imagen del Texto. '''
 		fuente = pygame.font.Font(pygame.font.match_font(self.entry.texto["tipo"], True, False), self.entry.texto["tamanio"])
-		string_to_render = unicode( str("|".decode("utf-8")) )
+		string_to_render = str( str("|".decode("utf-8")) )
 		imagen_fuente = fuente.render(string_to_render, 1, (color))
 		return imagen_fuente
 
@@ -497,11 +497,11 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def print_buffer(self, buffertext):
-		print self.widgets.buffertext
-		print buffertext
+		print(self.widgets.buffertext)
+		print(buffertext)
 
 	def salir(self):
-		print "\n"
+		print("\n")
 		self.widgets.Describe()
 		pygame.quit()
 		sys.exit()

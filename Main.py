@@ -47,7 +47,7 @@ def Guardar(tiempo):
     archivo = open(ARCHIVO, "w")
     archivo.write(tiempo)
     archivo.close()
-    os.chmod(ARCHIVO, 0666)
+    os.chmod(ARCHIVO, 0o666)
 
 
 def Abrir():
@@ -308,7 +308,7 @@ class ControlAlarma(pygame.sprite.OrderedUpdates):
 
         self.load()
 
-        self.botonminutos_up.connect(callback=self.next)
+        self.botonminutos_up.connect(callback=self.__next__)
         self.botonminutos_down.connect(callback=self.back)
 
         self.botonhoras_up.connect(callback=self.nexthoras)

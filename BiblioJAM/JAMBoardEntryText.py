@@ -11,9 +11,9 @@ import pygame, gc, sys, tempfile
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
-from JAMBoard import JAMBoard
-from JAMEntryText import JAMEntryText
+from . import JAMGlobals as VG
+from .JAMBoard import JAMBoard
+from .JAMEntryText import JAMEntryText
 
 class JAMBoardEntryText(pygame.sprite.OrderedUpdates):
 	def __init__(self):
@@ -281,11 +281,11 @@ class JAMBoardEntryText(pygame.sprite.OrderedUpdates):
 				JAMBoard
 				EntryText'''
 
-		print estructura, "\n"
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura, "\n")
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 # ----- FIN DE CLASE JAMBoardEntryText - INICIO DE DEBUG Y EJEMPLO DE LA CLASE -----
 class Ejemplo(object):
@@ -427,7 +427,7 @@ class Ejemplo(object):
 		return 0 '''
 
 	def Imprime_buffer(self, buf):
-		print buf
+		print(buf)
 		self.salir()
 
 	def get_Fondo(self):
@@ -442,7 +442,7 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def salir(self):
-		print "\n"
+		print("\n")
 		self.widgets.Describe()
 		pygame.quit()
 		sys.exit()

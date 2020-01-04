@@ -11,9 +11,9 @@ import pygame, gc, sys
 from pygame.locals import *
 gc.enable()
 
-import JAMGlobals as VG
-from JAMLabel import JAMLabel
-from JAMButton import JAMButton
+from . import JAMGlobals as VG
+from .JAMLabel import JAMLabel
+from .JAMButton import JAMButton
 
 class JAMDialog(pygame.sprite.OrderedUpdates):
 	def __init__(self, mensaje="JAMDialog", funcion_ok=None, funcion_cancel=None):
@@ -215,11 +215,11 @@ class JAMDialog(pygame.sprite.OrderedUpdates):
 				Boton Aceptar: JAMButton para detectar evento click y responder con la función asignada mediante connect
 				Boton Cancelar: JAMButton para detectar evento click y responder con la función asignada mediante connect '''
 
-		print estructura, "\n"
-		print "Ejemplo, Configuración actual:\n"
-		print "\t", self.JAMObjects.keys(), "\n"
-		for k in self.JAMObjects.items():
-			print k, "\n"
+		print(estructura, "\n")
+		print("Ejemplo, Configuración actual:\n")
+		print("\t", list(self.JAMObjects.keys()), "\n")
+		for k in list(self.JAMObjects.items()):
+			print(k, "\n")
 
 # ----- FIN DE CLASE JAMDialog - INICIO DE DEBUG Y EJEMPLO DE LA CLASE -----
 class Ejemplo(object):
@@ -402,7 +402,7 @@ class Ejemplo(object):
 		pygame.event.clear()
 
 	def salir(self):
-		print "\n"
+		print("\n")
 		self.widgets.Describe()
 		pygame.quit()
 		sys.exit()
