@@ -19,25 +19,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+from Main import Main
+from sugar3.activity.widgets import ActivityToolbarButton
+from sugar3.graphics.toolbarbox import ToolbarBox
+from sugar3.activity import activity
+from pygame.locals import *
+from sugargame import event
+from sugargame import canvas
+import sugargame
+from sugar3.graphics.style import GRID_CELL_SIZE
+import pygame
+import socket
+import sys
+from gi.repository import Gtk, GObject, Gdk
 import os
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, GObject, Gdk
-
-import sys
-import socket
-import pygame
-from sugar3.graphics.style import GRID_CELL_SIZE
-import sugargame
-from sugargame import canvas
-from sugargame import event
-
-from pygame.locals import *
-from sugar3.activity import activity
-from sugar3.graphics.toolbarbox import ToolbarBox
-from sugar3.activity.widgets import ActivityToolbarButton
-
-from Main import Main
 
 
 class JAMClock(activity.Activity):
@@ -50,7 +47,7 @@ class JAMClock(activity.Activity):
         h = Gdk.Screen.height() - 1 * GRID_CELL_SIZE
 
         # Start the Game activity
-        self.game = Main((w,h))
+        self.game = Main((w, h))
 
         # Build the Pygame canvas and start the game running
         # (self.game.run is called when the activity constructor
@@ -117,4 +114,3 @@ class VentanaGTK(Gtk.Window):
     def salir(self, widget):
         pygame.quit()
         sys.exit()
-

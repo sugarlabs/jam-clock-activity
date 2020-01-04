@@ -83,7 +83,7 @@ def Traduce_posiciones(VA, VH):
 
 class Main():
     def __init__(self, res):
-        
+
         self.resolucionreal = res
         self.ventana = None
         self.name = "JAMClock"
@@ -106,7 +106,6 @@ class Main():
 
         self.mensaje = None
         self.dialog = None
-        
 
     def preset(self):
         pygame.display.set_mode((0, 0))
