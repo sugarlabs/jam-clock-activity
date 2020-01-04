@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #   BiblioJAM (Versión 2.0) - 31/05/2011 - CeibalJAM! - Uruguay
