@@ -46,17 +46,15 @@ class JAMClock(activity.Activity):
         self.set_title('JAMClock')
         # self.set_toolbox(activity.ActivityToolbox(self))
 
-        # Create the game instance.
-        
+        w = Gdk.Screen.width()
+        h = Gdk.Screen.height() - 1 * GRID_CELL_SIZE
 
-        
+        # Start the Game activity
+        self.game = Main((w,h))
 
         # Build the Pygame canvas and start the game running
         # (self.game.run is called when the activity constructor
         # returns).
-        w = Gdk.Screen.width()
-        h = Gdk.Screen.height() - 1 * GRID_CELL_SIZE
-        self.game = Main((w,h))
         self._pygamecanvas = canvas.PygameCanvas(
             self, main=self.game.run, modules=[pygame.display])
 
@@ -70,9 +68,6 @@ class JAMClock(activity.Activity):
         # Build the activity toolbar.
         self.build_toolbar()
 
-
-        # os.putenv('SDL_WINDOWID', str(self.eventbox.socket.get_id()))
-
     def build_toolbar(self):
         toolbar_box = ToolbarBox()
         activity_button = ActivityToolbarButton(self)
@@ -81,7 +76,6 @@ class JAMClock(activity.Activity):
         self.set_toolbar_box(toolbar_box)
         toolbar_box.show_all()
         return toolbar_box
-
 
     def get_run_game(self):
         raise NotImplementedError
