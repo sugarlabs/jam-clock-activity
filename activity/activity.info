@@ -1,7 +1,10 @@
 [Activity]
 name = JAMClock
 activity_version = 2
+bundle_id = org.laptop.JAMClock
 service_name = org.laptop.JAMClock
 icon = JAMClock
 show_launcher = yes
 class = JAMClock.JAMClock
+exec = sugar-activity3 JAMClock.JAMClock
+license = NOAISSE
