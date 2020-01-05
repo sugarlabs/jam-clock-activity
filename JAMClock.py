@@ -21,6 +21,7 @@
 
 from Main import Main
 from sugar3.activity.widgets import ActivityToolbarButton
+from sugar3.activity.widgets import StopButton
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity import activity
 from pygame.locals import *
@@ -66,13 +67,24 @@ class JAMClock(activity.Activity):
         self.build_toolbar()
 
     def build_toolbar(self):
-        toolbar_box = ToolbarBox()
-        activity_button = ActivityToolbarButton(self)
-        toolbar_box.toolbar.insert(activity_button, 0)
-        activity_button.show()
-        self.set_toolbar_box(toolbar_box)
-        toolbar_box.show_all()
-        return toolbar_box
+        self.toolbar_box = ToolbarBox()
+        self.activity_button = ActivityToolbarButton(self)
+        self.toolbar_box.toolbar.insert(self.activity_button, 0)
+        self.activity_button.show()
+
+        self._separator = Gtk.SeparatorToolItem()
+        self._separator.props.draw = False
+        self._separator.set_expand(True)
+        self.toolbar_box.toolbar.insert(self._separator, -1)
+        self._separator.show()
+
+        self.stop = StopButton(self)
+        self.toolbar_box.toolbar.insert(self.stop, -1)
+        self.stop.show()
+        
+        self.set_toolbar_box(self.toolbar_box)
+        self.toolbar_box.show_all()
+        return self.toolbar_box
 
     def get_run_game(self):
         raise NotImplementedError
