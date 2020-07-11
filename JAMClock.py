@@ -19,6 +19,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+import gi
+gi.require_version('Gtk', '3.0')
 from Main import Main
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.activity.widgets import StopButton
@@ -34,8 +36,6 @@ import socket
 import sys
 from gi.repository import Gtk, GObject, Gdk
 import os
-import gi
-gi.require_version('Gtk', '3.0')
 
 
 class JAMClock(activity.Activity):
