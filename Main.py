@@ -237,11 +237,14 @@ class Main():
             pygame.display.update()
 
     def handle_event(self):
-        for event in pygame.event.get(pygame.KEYDOWN):
-            tecla = event.key
-            if tecla == pygame.K_ESCAPE:
-                pygame.event.clear()
-                return self.selecciona_mensaje_salir()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.estado = False
+            elif event.type == pygame.KEYDOWN:
+                tecla = event.key
+                if tecla == pygame.K_ESCAPE:
+                    pygame.event.clear()
+                    return self.selecciona_mensaje_salir()
 
     def pause_game(self):
         while self.mensaje.sprites():
