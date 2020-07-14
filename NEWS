@@ -1,0 +1,15 @@
+v3
+
+* Add Screnshots and README.md (Jui Pradhan),
+* Fix PyGIWarning (Jui Pradhan),
+* Exit using sugar toolbar stop button (Jui Pradhan),
+* Port to python3 (Srevin Saju),
+* Port to Gtk3 (Srevin Saju)
+
+v2
+
+* Release (Tony Anderson)
+
+v1
+
+* Initail release (Tony Anderson)
